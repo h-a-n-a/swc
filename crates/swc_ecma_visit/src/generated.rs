@@ -13181,7 +13181,12 @@ impl<V: ?Sized + Visit> VisitWith<V> for Str {
 
     fn visit_children_with(&self, visitor: &mut V) {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 {
                     <swc_common::Span as VisitWith<V>>::visit_with(span, visitor)
                 };
@@ -13409,6 +13414,7 @@ impl<V: ?Sized + Visit> VisitWith<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 {
                     <swc_common::Span as VisitWith<V>>::visit_with(span, visitor)
@@ -41431,7 +41437,12 @@ impl<V: ?Sized + VisitAstPath> VisitWithAstPath<V> for Str {
         __ast_path: &mut AstNodePath<'r>,
     ) {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 {
                     let mut __ast_path = __ast_path
                         .with_guard(AstParentNodeRef::Str(self, self::fields::StrField::Span));
@@ -41952,6 +41963,7 @@ impl<V: ?Sized + VisitAstPath> VisitWithAstPath<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 {
                     let mut __ast_path = __ast_path.with_guard(AstParentNodeRef::TplElement(
@@ -62125,7 +62137,12 @@ impl<V: ?Sized + VisitMut> VisitMutWith<V> for Str {
 
     fn visit_mut_children_with(&mut self, visitor: &mut V) {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 {
                     <swc_common::Span as VisitMutWith<V>>::visit_mut_with(span, visitor)
                 };
@@ -62353,6 +62370,7 @@ impl<V: ?Sized + VisitMut> VisitMutWith<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 {
                     <swc_common::Span as VisitMutWith<V>>::visit_mut_with(span, visitor)
@@ -86191,7 +86209,12 @@ impl<V: ?Sized + VisitMutAstPath> VisitMutWithAstPath<V> for Str {
 
     fn visit_mut_children_with_ast_path(&mut self, visitor: &mut V, __ast_path: &mut AstKindPath) {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 {
                     let mut __ast_path =
                         __ast_path.with_guard(AstParentKind::Str(self::fields::StrField::Span));
@@ -86602,6 +86625,7 @@ impl<V: ?Sized + VisitMutAstPath> VisitMutWithAstPath<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 {
                     let mut __ast_path = __ast_path.with_guard(AstParentKind::TplElement(
@@ -105424,11 +105448,21 @@ impl<V: ?Sized + Fold> FoldWith<V> for Str {
 
     fn fold_children_with(self, visitor: &mut V) -> Self {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 let span = { <swc_common::Span as FoldWith<V>>::fold_with(span, visitor) };
                 let value = { <swc_atoms::Atom as FoldWith<V>>::fold_with(value, visitor) };
                 let raw = { <Option<swc_atoms::Atom> as FoldWith<V>>::fold_with(raw, visitor) };
-                Str { span, value, raw }
+                Str {
+                    span,
+                    value,
+                    raw,
+                    lone_surrogates,
+                }
             }
         }
     }
@@ -105631,6 +105665,7 @@ impl<V: ?Sized + Fold> FoldWith<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 let span = { <swc_common::Span as FoldWith<V>>::fold_with(span, visitor) };
                 let cooked =
@@ -105641,6 +105676,7 @@ impl<V: ?Sized + Fold> FoldWith<V> for TplElement {
                     tail,
                     cooked,
                     raw,
+                    lone_surrogates,
                 }
             }
         }
@@ -130721,7 +130757,12 @@ impl<V: ?Sized + FoldAstPath> FoldWithAstPath<V> for Str {
 
     fn fold_children_with_ast_path(self, visitor: &mut V, __ast_path: &mut AstKindPath) -> Self {
         match self {
-            Str { span, value, raw } => {
+            Str {
+                span,
+                value,
+                raw,
+                lone_surrogates,
+            } => {
                 let span = {
                     let mut __ast_path =
                         __ast_path.with_guard(AstParentKind::Str(self::fields::StrField::Span));
@@ -130749,7 +130790,12 @@ impl<V: ?Sized + FoldAstPath> FoldWithAstPath<V> for Str {
                         &mut *__ast_path,
                     )
                 };
-                Str { span, value, raw }
+                Str {
+                    span,
+                    value,
+                    raw,
+                    lone_surrogates,
+                }
             }
         }
     }
@@ -131157,6 +131203,7 @@ impl<V: ?Sized + FoldAstPath> FoldWithAstPath<V> for TplElement {
                 tail,
                 cooked,
                 raw,
+                lone_surrogates,
             } => {
                 let span = {
                     let mut __ast_path = __ast_path.with_guard(AstParentKind::TplElement(
@@ -131193,6 +131240,7 @@ impl<V: ?Sized + FoldAstPath> FoldWithAstPath<V> for TplElement {
                     tail,
                     cooked,
                     raw,
+                    lone_surrogates,
                 }
             }
         }
@@ -139331,6 +139379,8 @@ pub mod fields {
         Value,
         #[doc = "Represents [`Str::raw`]"]
         Raw,
+        #[doc = "Represents [`Str::lone_surrogates`]"]
+        LoneSurrogates,
     }
     impl SuperField {
         pub(crate) fn set_index(&mut self, index: usize) {
@@ -139510,6 +139560,8 @@ pub mod fields {
         Cooked,
         #[doc = "Represents [`TplElement::raw`]"]
         Raw,
+        #[doc = "Represents [`TplElement::lone_surrogates`]"]
+        LoneSurrogates,
     }
     impl TruePlusMinusField {
         #[inline(always)]
