@@ -18,12 +18,15 @@ use std::{
     rc::Rc,
 };
 
+pub use hstr::wtf8;
 use once_cell::sync::Lazy;
 use serde::Serializer;
+use wtf8::Wtf8;
 
-pub use crate::fast::UnsafeAtom;
+pub use crate::{fast::UnsafeAtom, wtf8_atom::Wtf8Atom};
 
 mod fast;
+mod wtf8_atom;
 
 /// Clone-on-write string.
 ///
@@ -252,6 +255,11 @@ impl AtomStore {
     #[inline]
     pub fn atom<'a>(&mut self, s: impl Into<Cow<'a, str>>) -> Atom {
         Atom(self.0.atom(s))
+    }
+
+    #[inline]
+    pub fn wtf8_atom<'a>(&mut self, s: impl Into<Cow<'a, Wtf8>>) -> Wtf8Atom {
+        Wtf8Atom(self.0.wtf8_atom(s))
     }
 }
 
